@@ -1,0 +1,174 @@
+openapi: "3.0.3"
+info:
+  title: Stock management
+  description: CRUD operations for stock management
+  version: "1.0"
+servers:
+  - url: /stock
+paths:
+  /getStock:
+    get:
+      tags:
+        - stock
+      summary: get all stock
+      operationId: getAllStock
+      responses:
+        200:
+          description: List of stock items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockDTO'
+        401:
+          description: Error. User not authenticated.
+        403:
+          description: Error. User authenticated but not authorized.
+  /{productCode}:
+    get:
+      tags:
+        - stock
+      summary: get stock
+      operationId: getStock
+      parameters:
+        - in: path
+          name: productCode
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          description: Get specific stock item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockDTO'
+        401:
+          description: Error. User not authenticated.
+        403:
+          description: Error. User authenticated but not authorized.
+    put:
+      tags:
+        - stock
+      summary: update a stock item
+      operationId: updateStock
+      parameters:
+        - in: path
+          name: productCode
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockDTO'
+      responses:
+        200:
+          description: Stock item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockDTO'
+        401:
+          description: Error. User not authenticated.
+        403:
+          description: Error. User authenticated but not authorized.
+    delete:
+      tags:
+        - stock
+      summary: delete a stock item
+      operationId: deleteStock
+      parameters:
+        - in: path
+          name: productCode
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          description: Stock item deleted successfully
+        401:
+          description: Error. User not authenticated.
+        403:
+          description: Error. User authenticated but not authorized.
+  /:
+    post:
+      tags:
+        - stock
+      summary: store a new stock item
+      operationId: saveStock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStockRequest'
+      responses:
+        200:
+          description: Stock item stored successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockDTO'
+        401:
+          description: Error. User not authenticated.
+        403:
+          description: Error. User authenticated but not authorized.
+  /{productCode}/reserve:
+    post:
+      tags:
+        - stock
+      summary: Reserve an item that is in stock. The reservation will be kept for maximum of 5 minutes.
+      operationId: reserveStock
+      parameters:
+        - in: path
+          name: productCode
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          description: Stock item reserved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockDTO'
+        401:
+          description: Error. User not authenticated.
+        403:
+          description: Error. User authenticated but not authorized.
+components:
+  schemas:
+    StockDTO:
+      type: object
+      required:
+        - productCode
+        - productName
+        - store
+        - reserved
+        - sold
+      properties:
+        productCode:
+          type: string
+        productName:
+          type: string
+        store:
+          type: string
+        reserved:
+          type: boolean
+        sold:
+          type: boolean
+    CreateStockRequest:
+      type: object
+      required:
+        - productCode
+        - productName
+        - store
+      properties:
+        productCode:
+          type: string
+        productName:
+          type: string
+        store:
+          type: string
+
+
