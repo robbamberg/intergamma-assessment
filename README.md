@@ -6,8 +6,10 @@ This is a Kotlin Spring Boot application for a simple API doing CRUD on a stock 
 
 It is possible to add, update, delete and fetch stock entities. If you place a reservation on a stock item then it will automatically cancel after 5 minutes if it was not sold in that time.
 
-### Local Development
+### Running the application
 This application uses an embedded in memory h2 database. It uses flyway for db migrations.
+
+The application requires java-17 to be installed.
 
 You can build and test the application using gradle:
 
