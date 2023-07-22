@@ -23,6 +23,20 @@ Application runs and is accessible on: http://localhost:8080/
 
 API specification can be found in `stock_api.yaml`. THe generated HTML from this specification can be found in `documentation/api-documentation.html`
 
+### Docker
+
+Application can also run via docker. This also first requires a build:
+
+`./gradlew clean build`
+
+Next we need to build the imageL
+
+`docker build --build-arg JAR_FILE=build/libs/*.jar -t robbamberg/intergammaassessment .`
+
+Now we can run it:
+
+`docker run -p 8080:8080 robbamberg/intergammaassessment`
+
 ### Authorisation
 For demo purposes we have the SecurityConfiguration configuration in Config.tk. 
 This disables  Basic Authorisation and CSRF on the API, so it can be tested without issues locally.
