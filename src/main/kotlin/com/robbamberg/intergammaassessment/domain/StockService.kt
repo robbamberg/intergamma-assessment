@@ -14,7 +14,7 @@ class StockService(private val repository: StockRepository) {
     private val logger = LoggerFactory.getLogger(StockService::class.java)
 
     @Value("\${app.reservation.timeout}")
-    var reservationTimeout: Long = 1000
+    var reservationTimeout: Long = 300000
 
     fun getAllStock(): List<StockDTO> {
         logger.info("Fetching all stock")
