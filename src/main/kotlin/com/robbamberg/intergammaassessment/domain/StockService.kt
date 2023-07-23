@@ -39,12 +39,17 @@ class StockService(private val repository: StockRepository) {
 
     fun updateStock(productCode: String, stockDTO: StockDTO): StockDTO {
         logger.info("Updating stock")
+        if (stockDTO.productCode != productCode) {
+            throw IllegalStateException("Updating product code is not possible")
+        }
         repository.findById(productCode).orElseThrow{ throw IllegalStateException("Product not found") }
 
         return repository.save(stockDTO.toEntity()).toDTO()
     }
 
     fun deleteStock(productCode: String) {
+        logger.info("Deleting stock")
+        repository.findById(productCode).orElseThrow{ throw IllegalStateException("Product not found") }
         repository.deleteById(productCode)
     }
 
@@ -69,7 +74,7 @@ class StockService(private val repository: StockRepository) {
     fun cancelReservation(productCode: String) {
         val stock = repository.findById(productCode).orElseThrow{ IllegalStateException("Product not found") }
         if (stock.sold) {
-            // no need to cancel reservation if product is sold
+            logger.info("Stock is sold, so reservation not cancelled")
             return
         }
 

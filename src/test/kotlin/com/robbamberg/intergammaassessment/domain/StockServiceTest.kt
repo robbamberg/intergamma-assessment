@@ -61,9 +61,18 @@ class StockServiceTest {
 
     @Test
     fun `should delete stock`() {
+        `when`(repository.findById(productCode)).thenReturn(Optional.of(testData()))
+
         stockService.deleteStock(productCode)
 
         verify(repository).deleteById(productCode)
+    }
+
+    @Test
+    fun `should throw error if stock not existing on deleting`() {
+        `when`(repository.findById(productCode)).thenReturn(Optional.empty())
+
+        assertThrows<IllegalStateException> {stockService.deleteStock(productCode)}
     }
 
     @Test
@@ -106,6 +115,13 @@ class StockServiceTest {
         `when`(repository.findById(productCode)).thenReturn(Optional.empty())
 
         assertThrows<IllegalStateException> {stockService.updateStock(productCode, stockDTO)}
+    }
+
+    @Test
+    fun `should throw exception if attempting to update product code`() {
+        val stockDTO = testData().toDTO()
+
+        assertThrows<IllegalStateException> {stockService.updateStock("something-else", stockDTO)}
     }
 
     @Test

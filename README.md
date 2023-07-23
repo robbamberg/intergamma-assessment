@@ -37,7 +37,7 @@ Now we can run it:
 
 `docker run -p 8080:8080 robbamberg/intergammaassessment`
 
-### Authorisation
+### Authentication
 For demo purposes we have the SecurityConfiguration configuration in Config.tk. 
 This disables  Basic Authorisation and CSRF on the API, so it can be tested without issues locally.
 

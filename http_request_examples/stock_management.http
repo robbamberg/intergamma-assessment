@@ -1,0 +1,42 @@
+# Requires the app to be running, without authentication
+
+### Get all stock
+GET http://localhost:8080/stock/getStock
+
+### Store stock 1
+POST http://localhost:8080/stock/
+Content-Type: application/json
+
+{
+  "productCode": "RVQXWTZN",
+  "productName": "Boormachine",
+  "store": "Utrecht"
+}
+
+### Store stock 2
+POST http://localhost:8080/stock/
+Content-Type: application/json
+
+{
+"productCode": "WTSPLU2Q",
+"productName": "Slijptol",
+"store": "Leusden"
+}
+
+### Update stock
+PUT http://localhost:8080/stock/RVQXWTZN
+Content-Type: application/json
+
+{
+    "productCode": "RVQXWTZN",
+    "productName": "Bosch Boormachine",
+    "store": "Amsterdam",
+    "reserved": false,
+    "sold" : false
+}
+
+### Delete stock
+DELETE http://localhost:8080/stock/RVQXWTZN
+
+### Reserve stock
+POST http://localhost:8080/stock/RVQXWTZN/reserve
