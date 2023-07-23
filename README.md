@@ -23,6 +23,8 @@ Application runs and is accessible on: http://localhost:8080/
 
 API specification can be found in `stock_api.yaml`. THe generated HTML from this specification can be found in `documentation/api-documentation.html`
 
+Example request can be found in `http_request_examples/stock_management.http`
+
 ### Docker
 
 Application can also run via docker. This also first requires a build:
